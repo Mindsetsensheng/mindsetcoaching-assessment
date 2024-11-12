@@ -19,3 +19,76 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@media print {
+  .no-export {
+    display: none !important;
+  }
+
+  .print-expanded {
+    display: block !important;
+  }
+}
+
+/* 网页版和PDF版的显示控制 */
+.web-only {
+  display: block;
+}
+
+.pdf-only {
+  display: none;
+}
+
+/* PDF生成时的样式 */
+body.generating-pdf {
+  .web-only {
+    display: none !important;
+  }
+
+  .pdf-only {
+    display: block !important;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .web-only {
+    display: none !important;
+  }
+
+  .pdf-only {
+    display: block !important;
+  }
+}
+
+/* PDF 生成相关样式 */
+.pdf-content {
+  /* 确保内容在 PDF 中可见 */
+  page-break-inside: avoid;
+}
+
+body.generating-pdf .no-export {
+  display: none !important;
+}
+
+body.generating-pdf .pdf-show {
+  display: block !important;
+}
+
+body.generating-pdf .hidden.pdf-show {
+  display: block !important;
+}
+
+/* 在 PDF 生成时应用的样式 */
+body.generating-pdf .recharts-responsive-container {
+  height: 600px !important;
+  width: 100% !important;
+}
+
+body.generating-pdf .radar-section {
+  page-break-inside: avoid;
+}
+
+body.generating-pdf .dimension-section {
+  page-break-inside: avoid;
+}
