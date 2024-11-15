@@ -163,8 +163,8 @@ export default function QuestionPage() {
                 ))}
               </div>
               <div className="flex justify-between text-xs text-gray-400 px-1">
-                <span>完全不符合</span>
-                <span>完全符合</span>
+                <span>不符合</span>
+                <span>符合</span>
               </div>
             </div>
           </div>
