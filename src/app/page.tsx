@@ -20,7 +20,7 @@ export default function Home() {
               <p className="text-gray-600 mb-4">
                 探索您的思维模式特征，了解自己在不同情境下的思考方式和决策倾向。
               </p>
-              <p className="text-sm text-gray-500 mb-4">预计用时：15-20分钟</p>
+              <p className="text-sm text-gray-500 mb-4">预计用时:15-20分钟</p>
               <Link
                 href="/mindset"
                 className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors"
@@ -35,7 +35,7 @@ export default function Home() {
               <p className="text-gray-600 mb-4">
                 了解您在面对生活中的各种挑战时的反应方式和调适能力。
               </p>
-              <p className="text-sm text-gray-500 mb-4">预计用时：15-20分钟</p>
+              <p className="text-sm text-gray-500 mb-4">预计用时:15-20分钟</p>
               <Link
                 href="/resilience"
                 className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors"
