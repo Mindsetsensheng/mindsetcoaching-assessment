@@ -1,7 +1,7 @@
 // src/components/result/config/dimensions.ts
-import { IDimensionAnalysis } from './types'
+import { IMindsetDimensionAnalysis } from './types'
 
-export const dimensionAnalysis: IDimensionAnalysis = {
+export const dimensionAnalysis: IMindsetDimensionAnalysis = {
   growth: {
     name: '成长信念',
     description:

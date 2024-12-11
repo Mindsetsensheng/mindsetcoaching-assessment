@@ -2,12 +2,10 @@
 
 import React from 'react'
 import { ChevronDown } from 'lucide-react'
-import { dimensionAnalysis } from './config/dimensions'
-import { IDimensionLevel } from './config/types'
+import { IDimensionLevel, IDimensionConfig } from './config/types'
 
-// 定义组件的 Props 接口
 interface DimensionPanelProps {
-  dimension: keyof typeof dimensionAnalysis
+  config: IDimensionConfig
   score: number
   level: string
   isExpanded: boolean
@@ -15,22 +13,23 @@ interface DimensionPanelProps {
 }
 
 const DimensionPanel: React.FC<DimensionPanelProps> = ({
-  dimension,
+  config,
   score,
   level,
   isExpanded,
   onToggle,
 }) => {
-  const config = dimensionAnalysis[dimension]
   if (!config) return null
 
   const getScoreLevel = (score: number): IDimensionLevel | null => {
-    const levels = Object.entries(config.levels)
-    for (const [, levelConfig] of levels) {
-      if (score >= levelConfig.range[0] && score <= levelConfig.range[1]) {
-        return levelConfig
-      }
-    }
+    const { high, good, moderate, low } = config.levels
+
+    if (score >= high.range[0] && score <= high.range[1]) return high
+    if (score >= good.range[0] && score <= good.range[1]) return good
+    if (score >= moderate.range[0] && score <= moderate.range[1])
+      return moderate
+    if (score >= low.range[0] && score <= low.range[1]) return low
+
     return null
   }
 
@@ -60,7 +59,7 @@ const DimensionPanel: React.FC<DimensionPanelProps> = ({
           <p className="text-gray-600 mb-4">{config.description}</p>
 
           <ul className="mb-4 space-y-1">
-            {config.aspects.map((aspect, index) => (
+            {config.aspects.map((aspect: string, index: number) => (
               <li key={index} className="text-gray-600 flex items-center">
                 <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-2" />
                 {aspect}

@@ -2,8 +2,11 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { dimensionAnalysis } from '@/components/result/config/dimensions'
-import type { IAssessmentResults } from '@/components/result/config/types'
+import { dimensionAnalysis } from '@/components/result/config/mindset_dimensions'
+import type {
+  IMindsetResults,
+  IMindsetScores,
+} from '@/components/result/config/types'
 import ResultPage from '@/components/result'
 import Navbar from '@/components/common/Navbar'
 
@@ -61,9 +64,9 @@ const calculateDimensionScores = (answers: Record<string, number>) => {
   return scores
 }
 
-export default function AssessmentResultPage() {
+export default function MindsetResultPage() {
   const router = useRouter()
-  const [results, setResults] = useState<IAssessmentResults | null>(null)
+  const [results, setResults] = useState<IMindsetResults | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -126,7 +129,7 @@ export default function AssessmentResultPage() {
       })
 
       // 保存结果和时间戳
-      const resultsWithTimestamp = {
+      const resultsWithTimestamp: IMindsetResults = {
         dimensionScores,
         dimensionLevels,
         totalScore,
@@ -134,13 +137,10 @@ export default function AssessmentResultPage() {
         timestamp,
       }
 
-      // 保存到 localStorage
       localStorage.setItem(
-        'assessmentResults',
+        'mindsetResults',
         JSON.stringify(resultsWithTimestamp)
       )
-
-      // 设置结果
       setResults(resultsWithTimestamp)
     } catch (err) {
       console.error('Error processing results:', err)

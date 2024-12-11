@@ -41,7 +41,7 @@ export default function QuestionPage() {
         completedQuestions: answeredQuestions,
       }
       localStorage.setItem('mindsetAnswers', JSON.stringify(resultData))
-      router.push('/result')
+      router.push('/mindset/result')
     } catch (error) {
       console.error('Error saving answers:', error)
       alert('保存答案时出现错误，请重试')

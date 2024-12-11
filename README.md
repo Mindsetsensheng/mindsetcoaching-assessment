@@ -33,16 +33,16 @@ src/
 │   ├── globals.css         # 全局样式
 │   ├── mindset/            # 思维模式问卷模块
 │   │   ├── page.tsx       # 问卷说明页
-│   │   └── question/      # 问题模块
-│   │       ├── page.tsx   # 问题页面
-│   │       └── questionsData.ts  # 问题数据
-│   ├── resilience/          # 心理弹性问卷模块
-│   │   ├── page.tsx        # 问卷说明页
-│   │   └── question/       # 问题模块
-│   │       ├── page.tsx    # 问题页面
-│   │       └── questionsData.ts  # 问题数据
-│   └── result/             # 结果页面模块
-│       └── page.tsx       # 结果展示页面
+│   │   ├── question/      # 问题模块
+│   │   │   ├── page.tsx   # 问题页面
+│   │   │   └── questionsData.ts  # 问题数据
+│   │   └── result/        # 结果页面模块
+│   │       └── page.tsx   # 结果展示页面
+│   └── resilience/          # 心理弹性问卷模块
+│       ├── page.tsx        # 问卷说明页
+│       └── question/       # 问题模块
+│           ├── page.tsx    # 问题页面
+│           └── questionsData.ts  # 问题数据
 ├── components/             # 共享组件
 │   ├── common/            # 通用组件
 │   │   └── Navbar.tsx    # 导航栏组件
