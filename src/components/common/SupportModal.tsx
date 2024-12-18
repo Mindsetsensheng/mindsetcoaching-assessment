@@ -1,3 +1,4 @@
+'use client'
 import { SupportModalProps } from '@/components/result/config/types'
 
 const SupportModal: React.FC<SupportModalProps> = ({ open, onClose }) => {

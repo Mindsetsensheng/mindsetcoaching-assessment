@@ -1,4 +1,6 @@
 // src/components/result/index.tsx
+'use client'
+
 import MindsetResult from './MindsetResult'
 import ResilienceResult from './ResilienceResult'
 import { IMindsetResults, IResilienceResults } from './config/types'

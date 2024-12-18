@@ -1,5 +1,5 @@
 // src/components/result/DimensionPanel.tsx
-
+'use client'
 import React from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 
