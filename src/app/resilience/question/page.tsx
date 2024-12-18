@@ -35,7 +35,13 @@ export default function ResilienceQuestionPage() {
   const handleAnswer = (questionId: string, value: number) => {
     const newAnswers = { ...answers, [questionId]: value }
     setAnswers(newAnswers)
-    localStorage.setItem('resilienceAnswers', JSON.stringify(newAnswers))
+    const savedData = {
+      answers: newAnswers,
+      timestamp: new Date().toISOString(),
+      totalQuestions,
+      completedQuestions: Object.keys(newAnswers).length,
+    }
+    localStorage.setItem('resilienceAnswers', JSON.stringify(savedData))
   }
 
   const getCurrentAnswer = () => answers[`${currentSection}-${currentQuestion}`]

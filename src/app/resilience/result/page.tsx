@@ -3,9 +3,12 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Navbar from '@/components/common/Navbar'
-import { resilienceDimensionAnalysis } from '@/components/result/config/resilience_dimensions'
-import type { IResilienceResults } from '@/components/result/config/types'
-import ResultPage from '@/components/result'
+import { ResilienceResult } from '@/components/result'
+import {
+  IResilienceResults,
+  DimensionLevel,
+} from '@/components/result/config/types'
+import { resilienceDimensionAnalysis } from '@/components/result/config/resilience_dimensions' // 添加这行导入
 
 // 确定每个维度的水平
 const getDimensionLevel = (
@@ -24,14 +27,15 @@ const getDimensionLevel = (
 }
 
 // 获取水平的中文描述
-const getLevelText = (level: string) => {
-  const levelTexts = {
-    high: '优秀',
-    good: '良好',
-    moderate: '中等',
-    low: '待提升',
-  }
-  return levelTexts[level as keyof typeof levelTexts] || '待评估'
+const LEVEL_TEXT_MAP: Record<DimensionLevel, string> = {
+  high: '优秀',
+  good: '良好',
+  moderate: '中等',
+  low: '待提升',
+} as const
+
+const getLevelText = (level: DimensionLevel): string => {
+  return LEVEL_TEXT_MAP[level] || '待评估'
 }
 
 // 计算每个维度的得分
@@ -97,15 +101,23 @@ export default function ResilienceResultPage() {
 
   useEffect(() => {
     try {
+      console.log('Loading results page...')
+
       const savedData = localStorage.getItem('resilienceAnswers')
+      console.log('Saved data:', savedData)
+
       if (!savedData) {
+        console.log('No saved data found')
         setError('未找到答案数据')
         router.push('/resilience')
         return
       }
 
       const { answers } = JSON.parse(savedData)
+      console.log('Parsed answers:', answers)
+
       const dimensionScores = calculateResilienceScores(answers)
+      console.log('Calculated scores:', dimensionScores)
 
       // 确定每个维度的水平
       const dimensionLevels = {
@@ -160,16 +172,21 @@ export default function ResilienceResultPage() {
         totalScore,
         totalLevel,
         timestamp,
+        type: 'resilience', // 添加类型标识
       }
 
       localStorage.setItem(
-        'resilienceResults',
+        'resilienceResults', // 改用特定的键名
         JSON.stringify(resultsWithTimestamp)
       )
       setResults(resultsWithTimestamp)
-    } catch (err) {
+    } catch (err: unknown) {
       console.error('Error processing results:', err)
-      setError('处理结果时出错')
+      if (err instanceof Error) {
+        setError(`处理结果时出错: ${err.message}`)
+      } else {
+        setError('处理结果时出错：未知错误')
+      }
     } finally {
       setLoading(false)
     }
@@ -209,7 +226,7 @@ export default function ResilienceResultPage() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="pt-24">
-        <ResultPage results={results} />
+        <ResilienceResult results={results} />
       </div>
     </div>
   )

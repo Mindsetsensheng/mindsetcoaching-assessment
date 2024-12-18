@@ -3,29 +3,37 @@
 import React, { useState, useEffect } from 'react'
 import { Download } from 'lucide-react'
 import html2canvas from 'html2canvas'
-import { dimensionAnalysis } from '@/components/result/config/dimensions'
-import type { IDimensionLevel } from '@/components/result/config/types'
+import { dimensionAnalysis } from './result/config/mindset_dimensions'
+import type { IDimensionLevel } from './result/config/types'
+import { resilienceDimensionAnalysis } from './result/config/resilience_dimensions'
 
 interface ExportButtonProps {
   contentId: string
+  type: 'mindset' | 'resilience'
 }
 
-function ExportButton({ contentId }: ExportButtonProps) {
+function ExportButton({ contentId, type }: ExportButtonProps) {
   const [isGenerating, setIsGenerating] = useState(false)
   const [assessmentData, setAssessmentData] = useState<any>(null)
 
   // 获取评估数据
   useEffect(() => {
-    const savedData = localStorage.getItem('assessmentResults')
+    const storageKey =
+      type === 'mindset' ? 'mindsetResults' : 'resilienceResults'
+    const savedData = localStorage.getItem(storageKey)
     if (savedData) {
       setAssessmentData(JSON.parse(savedData))
     }
-  }, [])
+  }, [type])
 
   // 获取维度分析内容
   const getDimensionAnalysis = (dimension: string, score: number) => {
     const config =
-      dimensionAnalysis[dimension as keyof typeof dimensionAnalysis]
+      type === 'mindset'
+        ? dimensionAnalysis[dimension as keyof typeof dimensionAnalysis]
+        : resilienceDimensionAnalysis[
+            dimension as keyof typeof resilienceDimensionAnalysis
+          ]
     if (!config) return null
 
     const levels = Object.entries(config.levels)
@@ -49,6 +57,11 @@ function ExportButton({ contentId }: ExportButtonProps) {
     try {
       setIsGenerating(true)
 
+      // 根据类型设置标题和文件名
+      const title = type === 'mindset' ? '思维模式评估结果' : '心理弹性评估结果'
+      const fileName =
+        type === 'mindset' ? '思维模式评估报告' : '心理弹性评估报告'
+
       // 准备数据
       const {
         dimensionScores,
@@ -57,40 +70,97 @@ function ExportButton({ contentId }: ExportButtonProps) {
         totalLevel,
         timestamp,
       } = assessmentData
-      const scores = [
-        {
-          key: 'growth',
-          name: '成长信念',
-          score: dimensionScores.growth,
-          maxScore: 75,
-          percentage: Math.round((dimensionScores.growth / 75) * 100),
-          level: dimensionLevels.growth,
-        },
-        {
-          key: 'coping',
-          name: '应对模式',
-          score: dimensionScores.coping,
-          maxScore: 55,
-          percentage: Math.round((dimensionScores.coping / 55) * 100),
-          level: dimensionLevels.coping,
-        },
-        {
-          key: 'selfAwareness',
-          name: '自我认知',
-          score: dimensionScores.selfAwareness,
-          maxScore: 60,
-          percentage: Math.round((dimensionScores.selfAwareness / 60) * 100),
-          level: dimensionLevels.selfAwareness,
-        },
-        {
-          key: 'openness',
-          name: '开放性',
-          score: dimensionScores.openness,
-          maxScore: 55,
-          percentage: Math.round((dimensionScores.openness / 55) * 100),
-          level: dimensionLevels.openness,
-        },
-      ]
+      const scores =
+        type === 'mindset'
+          ? [
+              {
+                key: 'growth',
+                name: '成长信念',
+                score: dimensionScores.growth,
+                maxScore: 75,
+                percentage: Math.round((dimensionScores.growth / 75) * 100),
+                level: dimensionLevels.growth,
+              },
+              {
+                key: 'coping',
+                name: '应对模式',
+                score: dimensionScores.coping,
+                maxScore: 55,
+                percentage: Math.round((dimensionScores.coping / 55) * 100),
+                level: dimensionLevels.coping,
+              },
+              {
+                key: 'selfAwareness',
+                name: '自我认知',
+                score: dimensionScores.selfAwareness,
+                maxScore: 60,
+                percentage: Math.round(
+                  (dimensionScores.selfAwareness / 60) * 100
+                ),
+                level: dimensionLevels.selfAwareness,
+              },
+              {
+                key: 'openness',
+                name: '开放性',
+                score: dimensionScores.openness,
+                maxScore: 55,
+                percentage: Math.round((dimensionScores.openness / 55) * 100),
+                level: dimensionLevels.openness,
+              },
+            ]
+          : [
+              // 心理弹性维度
+              {
+                key: 'stressTolerance',
+                name: '压力承受',
+                score: dimensionScores.stressTolerance,
+                maxScore: 45,
+                percentage: Math.round(
+                  (dimensionScores.stressTolerance / 45) * 100
+                ),
+                level: dimensionLevels.stressTolerance,
+              },
+              {
+                key: 'emotionalRecovery',
+                name: '情绪恢复',
+                score: dimensionScores.emotionalRecovery,
+                maxScore: 55,
+                percentage: Math.round(
+                  (dimensionScores.emotionalRecovery / 55) * 100
+                ),
+                level: dimensionLevels.emotionalRecovery,
+              },
+              {
+                key: 'adaptability',
+                name: '适应能力',
+                score: dimensionScores.adaptability,
+                maxScore: 50,
+                percentage: Math.round(
+                  (dimensionScores.adaptability / 50) * 100
+                ),
+                level: dimensionLevels.adaptability,
+              },
+              {
+                key: 'problemSolving',
+                name: '问题解决',
+                score: dimensionScores.problemSolving,
+                maxScore: 50,
+                percentage: Math.round(
+                  (dimensionScores.problemSolving / 50) * 100
+                ),
+                level: dimensionLevels.problemSolving,
+              },
+              {
+                key: 'socialSupport',
+                name: '社会支持',
+                score: dimensionScores.socialSupport,
+                maxScore: 50,
+                percentage: Math.round(
+                  (dimensionScores.socialSupport / 50) * 100
+                ),
+                level: dimensionLevels.socialSupport,
+              },
+            ]
 
       // 创建导出容器
       const exportWrapper = document.createElement('div')
@@ -104,7 +174,7 @@ function ExportButton({ contentId }: ExportButtonProps) {
       // 添加内容
       exportWrapper.innerHTML = `
         <div style="text-align: center; margin-bottom: 2rem;">
-          <h1 style="font-size: 1.5rem; font-weight: 600; color: #111827;">思维模式评估结果</h1>
+          <h1 style="font-size: 1.5rem; font-weight: 600; color: #111827;">${title}</h1>
           <p style="font-size: 0.875rem; color: #6B7280; margin-top: 0.5rem;">测评时间：${
             timestamp || ''
           }</p>
@@ -216,9 +286,7 @@ function ExportButton({ contentId }: ExportButtonProps) {
       // 导出图片
       const image = canvas.toDataURL('image/png', 1.0)
       const link = document.createElement('a')
-      link.download = `思维模式评估报告_${
-        timestamp?.replace(/[/:]/g, '') || ''
-      }.png`
+      link.download = `${fileName}_${timestamp?.replace(/[/:]/g, '') || ''}.png`
       link.href = image
       document.body.appendChild(link)
       link.click()

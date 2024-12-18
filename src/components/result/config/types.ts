@@ -62,12 +62,42 @@ interface IBaseAssessmentResults<T> {
   totalScore: number
   totalLevel: string
   timestamp: string
+  type: 'mindset' | 'resilience'
 }
 
 export interface IMindsetResults
-  extends IBaseAssessmentResults<IMindsetScores> {}
+  extends IBaseAssessmentResults<IMindsetScores> {
+  type: 'mindset'
+}
 export interface IResilienceResults
-  extends IBaseAssessmentResults<IResilienceScores> {}
+  extends IBaseAssessmentResults<IResilienceScores> {
+  type: 'resilience'
+}
 
 // 导出通用类型（用于向后兼容）
 export type IAssessmentResults = IMindsetResults | IResilienceResults
+
+export type DimensionLevel = 'high' | 'good' | 'moderate' | 'low'
+
+// 添加心理弹性得分接口
+export interface IResilienceScores {
+  stressTolerance: number
+  emotionalRecovery: number
+  adaptability: number
+  problemSolving: number
+  socialSupport: number
+}
+
+// Modal Related Types
+export interface ModalProps {
+  open: boolean
+  onClose: () => void
+}
+
+export interface SupportModalProps extends ModalProps {
+  // 如果将来需要添加特定的 props，可以在这里扩展
+}
+
+export interface QRCodeModalProps extends ModalProps {
+  // 如果将来需要添加特定的 props，可以在这里扩展
+}

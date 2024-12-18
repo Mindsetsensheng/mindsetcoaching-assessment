@@ -1,12 +1,16 @@
 // src/app/mindset/page.tsx
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Navbar from '@/components/common/Navbar'
 
 export default function MindsetQuestionnaire() {
   const router = useRouter()
+
+  useEffect(() => {
+    localStorage.removeItem('mindsetResults')
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-50">

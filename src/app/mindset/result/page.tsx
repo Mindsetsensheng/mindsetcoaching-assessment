@@ -7,8 +7,8 @@ import type {
   IMindsetResults,
   IMindsetScores,
 } from '@/components/result/config/types'
-import ResultPage from '@/components/result'
 import Navbar from '@/components/common/Navbar'
+import { MindsetResult } from '@/components/result'
 
 // 确定每个维度的水平
 const getDimensionLevel = (
@@ -135,6 +135,7 @@ export default function MindsetResultPage() {
         totalScore,
         totalLevel,
         timestamp,
+        type: 'mindset',
       }
 
       localStorage.setItem(
@@ -184,7 +185,7 @@ export default function MindsetResultPage() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="pt-24">
-        <ResultPage results={results} />
+        <MindsetResult results={results} />
       </div>
     </div>
   )

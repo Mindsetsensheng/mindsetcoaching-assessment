@@ -1,4 +1,4 @@
-import { IResilienceDimensionAnalysis } from './types'
+import { IResilienceDimensionAnalysis, IResilienceScores } from './types'
 
 export const resilienceDimensionAnalysis: IResilienceDimensionAnalysis = {
   stressTolerance: {
@@ -194,4 +194,52 @@ export const resilienceDimensionAnalysis: IResilienceDimensionAnalysis = {
       },
     },
   },
+}
+
+// 计算维度分数
+export const calculateResilienceScores = (
+  answers: Record<string, number>
+): IResilienceScores => {
+  return {
+    stressTolerance: Object.entries(answers)
+      .filter(([key]) => key.startsWith('0-'))
+      .reduce((sum, [, value]) => sum + value, 0),
+    emotionalRecovery: Object.entries(answers)
+      .filter(([key]) => key.startsWith('1-'))
+      .reduce((sum, [, value]) => sum + value, 0),
+    adaptability: Object.entries(answers)
+      .filter(([key]) => key.startsWith('2-'))
+      .reduce((sum, [, value]) => sum + value, 0),
+    problemSolving: Object.entries(answers)
+      .filter(([key]) => key.startsWith('3-'))
+      .reduce((sum, [, value]) => sum + value, 0),
+    socialSupport: Object.entries(answers)
+      .filter(([key]) => key.startsWith('4-'))
+      .reduce((sum, [, value]) => sum + value, 0),
+  }
+}
+
+// 获取维度等级
+export const getDimensionLevel = (
+  dimension: keyof IResilienceScores,
+  score: number
+): string => {
+  const config = resilienceDimensionAnalysis[dimension]
+  const levels = Object.entries(config.levels)
+
+  for (const [level, levelConfig] of levels) {
+    if (score >= levelConfig.range[0] && score <= levelConfig.range[1]) {
+      return level.charAt(0).toUpperCase() + level.slice(1)
+    }
+  }
+
+  return 'Moderate' // 默认返回
+}
+
+// 获取总分等级
+export const getTotalLevel = (score: number): string => {
+  if (score >= 200) return '优秀的心理弹性'
+  if (score >= 150) return '良好的心理弹性'
+  if (score >= 100) return '一般的心理弹性'
+  return '需要提升的心理弹性'
 }

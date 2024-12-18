@@ -38,3 +38,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 心理弹性评估相关文档
+心理弹性评估问卷.md
+心理弹性评估问卷（分部分版）resilience-questionnaire-sectioned.md
+心理弹性评估问卷计分与解释指南 resilience-scoring-guide.md
