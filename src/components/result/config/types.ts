@@ -96,8 +96,10 @@ export interface ModalProps {
 
 export interface SupportModalProps extends ModalProps {
   // 如果将来需要添加特定的 props，可以在这里扩展
+  className?: string
 }
 
 export interface QRCodeModalProps extends ModalProps {
   // 如果将来需要添加特定的 props，可以在这里扩展
+  className?: string
 }

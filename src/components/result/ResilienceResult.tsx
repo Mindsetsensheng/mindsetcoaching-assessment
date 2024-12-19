@@ -1,17 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import {
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts'
 import { IResilienceResults } from './config/types'
 import { resilienceDimensionAnalysis } from './config/resilience_dimensions'
-import CustomAxisTick from './CustomAxisTick'
 import DimensionPanel from './DimensionPanel'
 import ExportButton from '../ExportButton'
 import ResilienceRadarChart from './ResilienceRadarChart'

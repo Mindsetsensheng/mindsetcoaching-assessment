@@ -3,10 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { dimensionAnalysis } from '@/components/result/config/mindset_dimensions'
-import type {
-  IMindsetResults,
-  IMindsetScores,
-} from '@/components/result/config/types'
+import type { IMindsetResults } from '@/components/result/config/types'
 import Navbar from '@/components/common/Navbar'
 import { MindsetResult } from '@/components/result'
 
